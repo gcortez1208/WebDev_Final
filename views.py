@@ -38,6 +38,9 @@ def submit():
         result = 'correct'
     else:
         result = 'incorrect'
+        'upadate the game score bhy rewarding the user with points for correct answers and keeping track of the score across multiple questions. You can use a session variable to store the score and update it each time the user submits an answer.'
+        'send the next question to the user after they submit an answer, allowing them to continue playing without having to refresh the page or navigate back to the homepage. You can achieve this by redirecting the user to a new route that serves the next question after processing their answer.'
+        
 
     index += 1
     session['current_index'] = index
@@ -47,6 +50,7 @@ def submit():
         return render_template('index.html', question=next_question, index=index, score=score, result=result, previous_answer=user_answer, correct_answer=correct_answer)
     else:
         return render_template('results.html', final_score=score, total=len(questions))
+    
     
 
 if __name__ == '__main__':

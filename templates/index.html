@@ -10,7 +10,7 @@
 </head>
 
 <body id="app">
-  <form class="container" action="{% url 'submit' %}" method="POST">
+  <form class="container" action="{% url 'process_form' %}" method="POST">
     {% csrf_token %}
     <div class="horizontal-container">
       <h3>
