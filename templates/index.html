@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capital City Quiz</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+</head>
+
+<body id="app">
+  <form class="container" action="{% url 'submit' %}" method="POST">
+    {% csrf_token %}
+    <div class="horizontal-container">
+      <h3>
+        Total Score:
+        <span id="score">{{ score }}</span>
+      </h3>
+    </div>
+
+    <h1 id="countryName">
+      <img src="{% static image_path %}" alt="{{ question.country }}" width="80px">
+      {{ question.country }}
+    </h1>
+
+    <div class="answer-container">
+      <input type="text" name="answer" id="userInput" placeholder="Enter the capital" autofocus autocomplete="off">
+    </div>
+
+    {% if result %}
+      <div id="result">
+        {% if result == 'correct' %}
+          Correct! ✅
+        {% else %}
+          Incorrect. The correct answer is {{ correct_answer }}. You entered: {{ previous_answer }} ❌
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <button type="submit">SUBMIT</button>
+  </form>
+</body>
+
+</html>
