@@ -22,7 +22,7 @@ def index():
     # Shuffle questions for each session
     session['questions'] = random.sample(questions, len(questions))
     session['current_index'] = 0
-    session['score'] = 0
+    session['score'] = 0  # Initialize on homepage
     return render_template('index.html', question=session['questions'][0], index=0, score=0)
 
 @app.route('/submit', methods=['POST'])
@@ -34,12 +34,11 @@ def submit():
 
     if user_answer == correct_answer:
         score += 1
-        session['score'] = score
+        session['score'] = score  # Update session
         result = 'correct'
     else:
         result = 'incorrect'
-        'upadate the game score bhy rewarding the user with points for correct answers and keeping track of the score across multiple questions. You can use a session variable to store the score and update it each time the user submits an answer.'
-        'send the next question to the user after they submit an answer, allowing them to continue playing without having to refresh the page or navigate back to the homepage. You can achieve this by redirecting the user to a new route that serves the next question after processing their answer.'
+        
         
 
     index += 1
@@ -47,7 +46,17 @@ def submit():
 
     if index < len(session['questions']):
         next_question = session['questions'][index]
-        return render_template('index.html', question=next_question, index=index, score=score, result=result, previous_answer=user_answer, correct_answer=correct_answer)
+        return render(
+            request,
+            "index.html",
+            {
+                "question": next_question,
+                "score": score,
+                "result": result,
+                "previous_answer": user_answer,
+                "correct_answer": correct_answer,
+            },
+        )
     else:
         return render_template('results.html', final_score=score, total=len(questions))
     
